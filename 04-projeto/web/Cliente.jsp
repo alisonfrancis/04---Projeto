@@ -29,22 +29,36 @@
 
 %>
 <html>
-     <!-- include do cabeçalho -->
-    <%@include file="WEB-INF/jspf/cabecalho.jspf"%>
+   <!-- include do cabeçalho -->
+    <head>
+        <title>Cadastro - Cliente</title>
+        <%-- Carregando os jsp's da página --%>
+        <%@include file="WEB-INF/jspf/cabecalho.jspf"%>
+    </head>
+   
     <!-- Fim do include do cabeçalho-->
     <body>
-        <a href="Home.jsp">Home</a>
-        <h4>Adicionar Clientes</h4>
+         <%-- Carregando a navbar --%>
+        <%@include file="WEB-INF/jspf/navbar.jspf"%>
+        
+            <div class="container">
+                <div class="py-5 text-center">
+                  <img class="d-block mx-auto mb-4" src="Imagens/user.png"  alt="" width="72" height="72">
+                  <h2>Adicionar Clientes</h2>
+                  <p class="lead">Insira os dados do cliente de acordo com a solicitação dos campos abaixo.</p>
+                </div>
+            </div>
+        
         <fieldset><center>
            
             <form>
-                Nome: <br/><input type="text" name="nome"/><br/>
-                Rg:<br/><input type="text" name="rg"/><br/>
-                Cpf:<br/><input type="text" name="cpf"/><br/>
-                Telefone:<br/><input type="text" name="telefone"/><br/>
-                E-Mail:<br/><input type="text" name="email"/><br/>
-                Endereço:<br/><input type="text" name="endereco"/><br/>
-                <br/><input type="submit" name="add" value="Adicionar"/><br/>
+                Nome: <br/><input type="text" name="nome" placeholder="Ex. João"/><br/>
+                Rg:<br/><input type="text" name="rg" placeholder="12.345.678-9"/><br/>
+                Cpf:<br/><input type="text" name="cpf" placeholder="123.456.789-00"/><br/>
+                Telefone:<br/><input type="text" name="telefone" placeholder="01399999-9999"/><br/>
+                E-Mail:<br/><input type="text" name="email" placeholder="email@example.com"/><br/>
+                Endereço:<br/><input type="text" name="endereco" placeholder="Ex. Rua 123"/><br/>
+                <br/><input type="submit" name="add" value="Adicionar" class="btn btn-info"/><br/>
             </form> </center>           
         </fieldset><hr/>
         
@@ -57,7 +71,7 @@
                 <th>telefone</th>
                 <th>Email</th>
                 <th>Endereço</th>
-                <th>Exclusão</th>
+                <th>Exclusão/Alteração</th>
                 </tr></thead>
  
             <% for(int i = 0; i<Bd.getCliente().size();i++){%>
@@ -72,13 +86,15 @@
                 <td>
                     <form>
                         <input type="hidden" name="i" value="<%= i%>">
-                        <input type="submit" name="del" value="Excluir">
+                        <input type="submit" name="del" value="Excluir"  class="btn btn-danger">
+                        <input type="submit" name="del" value="Altera" class="btn btn-success">
                     </form>
                 </td>
             </tr>
             <%}%>
             
         </table>
-
+             <%-- Carregando foorte--%>
+        <%@include file="WEB-INF/jspf/rodape.jspf"%>
     </body>
 </html>

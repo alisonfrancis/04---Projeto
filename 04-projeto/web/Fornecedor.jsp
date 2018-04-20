@@ -8,11 +8,24 @@
 <!DOCTYPE html>
 <html>
      <!-- include do cabeçalho -->
-    <%@include file="WEB-INF/jspf/cabecalho.jspf"%>
+    <head>
+        <title>Cadastro - Fornecedor</title>
+        <%-- Carregando os jsp's da página --%>
+        <%@include file="WEB-INF/jspf/cabecalho.jspf"%>
+    </head>
+   
     <!-- Fim do include do cabeçalho-->
     <body>
-        <a href="Home.jsp">Home</a>
-     <h1>Registro</h1>
+     <%-- Carregando a navbar --%>
+        <%@include file="WEB-INF/jspf/navbar.jspf"%>
+        
+       <div class="container">
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="Imagens/group.png"  alt="" width="72" height="72">
+        <h2>Cadastro - Fornecedores</h2>
+        <p class="lead">Insira os dados do cliente de acordo com a solicitação dos campos abaixo.</p>
+      </div>
+        </div>
         <fieldset>
             <legend>Adicionar Fornecedores</legend>
             <form>
@@ -25,5 +38,8 @@
                 <br/><input type="submit" name="add" value="Adicionar"/><br/>
             </form>            
         </fieldset><hr/>
+        
+               <%-- Carregando foorte--%>
+        <%@include file="WEB-INF/jspf/rodape.jspf"%>
     </body>
 </html>

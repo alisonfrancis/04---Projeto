@@ -1,8 +1,8 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
-<head>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Sistema de Cadastro</title>
+      
         <!-- link do boot-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
               integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" 
@@ -10,6 +10,6 @@
         <!-- link do boot-->
         
          <!-- Favicon -->
-        <link rel="shortcut icon" href="Imagens/favicon4.png" />
+        <link rel="shortcut icon" href="Imagens/favicon1.png" />
         <!-- Fim do Favicon -->
-</head>
+
