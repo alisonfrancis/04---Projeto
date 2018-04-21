@@ -12,10 +12,14 @@ import java.util.ArrayList;
  * cria um arraylist para cliente e outro para fornecedor.
  */
 public class Bd {
-    
-      private static ArrayList<Clientes> Cliente = new ArrayList <>();
+    private static ArrayList<Clientes> Cliente = new ArrayList <>();
+    private static ArrayList<Fornecedores> Fornecedor = new ArrayList <>();
     
     public static ArrayList<Clientes> getCliente(){
-    return Cliente;
+        return Cliente;
+    }
+    
+    public static ArrayList<Fornecedores> getFornecedor(){
+        return Fornecedor;
     }
 }
