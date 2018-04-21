@@ -26,6 +26,20 @@
         Bd.getCliente().remove(i);
         response.sendRedirect(request.getRequestURI());
     }
+    if(request.getParameter("alt")!= null){
+    int i = Integer.parseInt(request.getParameter("i"));
+        Bd.getCliente().remove(i);
+        
+       Clientes cl = new Clientes();
+    cl.setNome(request.getParameter("nome"));
+    cl.setRg(request.getParameter("rg"));
+    cl.setCpf(request.getParameter("cpf"));
+    cl.setTelefone(request.getParameter("telefone"));
+    cl.setEmail(request.getParameter("email"));
+    cl.setEndereco(request.getParameter("endereco"));
+    Bd.getCliente().add(cl);
+    response.sendRedirect(request.getRequestURI());
+    }
 
 %>
 <html>
@@ -49,18 +63,38 @@
                 </div>
             </div>
         
-        <fieldset><center>
-           
+        <center>
             <form>
-                Nome: <br/><input type="text" name="nome" placeholder="Ex. João"/><br/>
-                Rg:<br/><input type="text" name="rg" placeholder="12.345.678-9"/><br/>
-                Cpf:<br/><input type="text" name="cpf" placeholder="123.456.789-00"/><br/>
-                Telefone:<br/><input type="text" name="telefone" placeholder="01399999-9999"/><br/>
-                E-Mail:<br/><input type="text" name="email" placeholder="email@example.com"/><br/>
-                Endereço:<br/><input type="text" name="endereco" placeholder="Ex. Rua 123"/><br/>
-                <br/><input type="submit" name="add" value="Adicionar" class="btn btn-info"/><br/>
-            </form> </center>           
-        </fieldset><hr/>
+            <table>
+                <tr>
+                    <td> Nome:</td>
+                    <td><input class="form-control" type="text" name="nome" placeholder="Ex. João"/></td>
+                </tr>
+                <tr>
+                    <td>RG:</td>
+                    <td><input class="form-control" type="text" name="rg" placeholder="12.345.678-9"/></td>
+                </tr>
+                <tr>
+                    <td>CPF:</td>
+                    <td><input class="form-control" type="text" name="cpf" placeholder="123.456.789-00"/></td>
+                </tr>
+                <tr>
+                    <td>Telefone:</td>
+                    <td><input class="form-control" type="text" name="telefone" placeholder="01399999-9999"/></td>
+                </tr>
+                <tr>
+                    <td>E-Mail:</td>
+                    <td><input class="form-control" type="text" name="email" placeholder="email@example.com"/></td>
+                </tr>
+                <tr>
+                    <td>Endereço:</td>
+                    <td><input class="form-control" type="text" name="endereco" placeholder="Ex. Rua 123"/></td>
+                </tr>
+            </table> 
+            <br/>
+                    <input type="submit" name="add" value="Adicionar" class="btn btn-info  btn-lg"/>
+            </form>
+        </center><hr/>
         
         <table class="table table-hover">
             <thead class="thead-light"> <tr>
@@ -87,7 +121,7 @@
                     <form>
                         <input type="hidden" name="i" value="<%= i%>">
                         <input type="submit" name="del" value="Excluir"  class="btn btn-danger">
-                        <input type="submit" name="del" value="Altera" class="btn btn-success">
+                        <input type="submit" name="alt" value="Altera" class="btn btn-success">
                     </form>
                 </td>
             </tr>
@@ -98,3 +132,4 @@
         <%@include file="WEB-INF/jspf/rodape.jspf"%>
     </body>
 </html>
+

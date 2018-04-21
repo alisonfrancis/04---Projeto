@@ -1,8 +1,8 @@
-<%-- any content can be specified here e.g.: --%>
+<%-- navbar --%>
 <%@ page pageEncoding="UTF-8" %>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-image: url(Imagens/group0.png)">
     <a href="Home.jsp"><img src="Imagens/favicon1.png"></a>
-    <a class="navbar-brand" href="Home.jsp"><h3>Cad-tro</h3></a>
+    <a class="navbar-brand" href="Home.jsp"><h3>Cad@stro</h3></a>
     
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
