@@ -16,15 +16,15 @@ public class Fornecedores {
         return Fornecedor;
     }
     
-    public static Fornecedores fornecedorPk(int pk) {
+    public static Fornecedores fornecedorPk(int i) {
         try {
             for (Fornecedores fornecedor : Fornecedor) {
-                if (fornecedor.pk == pk) {
+                if (fornecedor.pk == i) {
                     return fornecedor;
                 }
             }
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("Errou!");
             return null;
         }
         return null;

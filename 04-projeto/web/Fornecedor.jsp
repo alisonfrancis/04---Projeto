@@ -16,16 +16,20 @@
             c.setTelefone(request.getParameter("telefone"));
             c.setEmail(request.getParameter("email"));
             c.setEndereco(request.getParameter("endereco"));
-            Fornecedores.getFornecedor().add(c);
-            response.sendRedirect(request.getRequestURI());
+            if(request.getParameter("add")!= null){ /* Se clicar em Adicionar: cria um novo registro no ArrayList do Fornecedor */
+               Fornecedores.getFornecedor().add(c);
+               response.sendRedirect(request.getRequestURI()); 
+            } else { /* Se clicar em Salvar: Salva no mesmo registro do ArrayList do Fornecedor */
                 
-        }else if(request.getParameter("del")!= null){
+            }
+ 
+        } else if(request.getParameter("del")!= null){
             int i = Integer.parseInt(request.getParameter("i"));
             Fornecedores.getFornecedor().remove(i);
             response.sendRedirect(request.getRequestURI());
                 
         }else if(request.getParameter("alt")!= null){
-            short i = Short.parseShort(request.getParameter("i"));
+            int i = Integer.parseInt(request.getParameter("i"));
             fornecedorEncontrado = Fornecedores.fornecedorPk(i);
         }
     %>
@@ -51,16 +55,16 @@
         <fieldset><center>
             <legend>Adicionar Fornecedores</legend>
             <form>
-                Nome: <br/><input type="text" name="nome" placeholder="Ex. Maria" <% if (fornecedorEncontrado != null) {%> value="<%=fornecedorEncontrado.getNome()%>" <%}%>><br/>
-                Razão Social:<br/><input type="text" name="razao_social" placeholder="Ex. Trick or Treat & Cia Ltda" <% if (fornecedorEncontrado != null) {%> value="<%=fornecedorEncontrado.getRazsoc()%>" <%}%>><br/>
-                CNPJ:<br/><input type="text" name="cnpj" placeholder="Ex. 12.345.678/1234-56" <% if (fornecedorEncontrado != null) {%> value="<%=fornecedorEncontrado.getCnpj()%>" <%}%>><br/>
-                Telefone:<br/><input type="text" name="telefone" placeholder="Ex. 01399999-9999" <% if (fornecedorEncontrado != null) {%> value="<%=fornecedorEncontrado.getTelefone()%>" <%}%>><br/>
-                E-Mail:<br/><input type="text" name="email"  placeholder="Ex. email@examplo.com" <% if (fornecedorEncontrado != null) {%> value="<%=fornecedorEncontrado.getEmail()%>" <%}%>><br/>
-                Endereço:<br/><input type="text" name="endereco" placeholder="Ex. Rua 134666" <% if (fornecedorEncontrado != null) {%> value="<%=fornecedorEncontrado.getEndereco()%>" <%}%>><br/>
+                Nome: <br/><input type="text" id="nome" name="nome" placeholder="Ex. Maria" <% if (fornecedorEncontrado != null) {%> value="<%=fornecedorEncontrado.getNome()%>" <%}%>><br/>
+                Razão Social:<br/><input type="text" id="razao_social" name="razao_social" placeholder="Ex. Trick or Treat & Cia Ltda" <% if (fornecedorEncontrado != null) {%> value="<%=fornecedorEncontrado.getRazsoc()%>" <%}%>><br/>
+                CNPJ:<br/><input type="text" name="cnpj" id="cnpj" placeholder="Ex. 12.345.678/1234-56" <% if (fornecedorEncontrado != null) {%> value="<%=fornecedorEncontrado.getCnpj()%>" <%}%>><br/>
+                Telefone:<br/><input type="text" name="telefone" id="telefone" placeholder="Ex. 01399999-9999" <% if (fornecedorEncontrado != null) {%> value="<%=fornecedorEncontrado.getTelefone()%>" <%}%>><br/>
+                E-Mail:<br/><input type="text" name="email" id="email"  placeholder="Ex. email@examplo.com" <% if (fornecedorEncontrado != null) {%> value="<%=fornecedorEncontrado.getEmail()%>" <%}%>><br/>
+                Endereço:<br/><input type="text" name="endereco" id="endereco" placeholder="Ex. Rua 134666" <% if (fornecedorEncontrado != null) {%> value="<%=fornecedorEncontrado.getEndereco()%>" <%}%>><br/>
                 <% if (fornecedorEncontrado == null) {%>
                     <br/><input type="submit" name="add" value="Adicionar"/><br/>
                 <%} else {%>
-                    <input type="number" name="id" value="<%=fornecedorEncontrado.getPk()%>" hidden>
+                    <input type="number" name="pk" value="<%=fornecedorEncontrado.getPk()%>" hidden>
                     <input type="submit" name="sav" value="Salvar">
                 <%}%>
             </form></center>            
