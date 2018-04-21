@@ -1,12 +1,42 @@
 package br.com.fatecpg.projeto04;
 
+import java.util.ArrayList;
+
 public class Fornecedores {
+    private static ArrayList<Fornecedores> Fornecedor = new ArrayList <>();
+    private int pk; /* Valor/Chave único(a) de indetificação do fornecedor*/
     private String nome; /* Nome do fornecedore */
     private String razsoc; /* Razão social */
     private String cnpj; /* cnpj do fornecedor */
     private String telefone; /* Telefone do fornecedor: */
     private String email;  /* E-mail do fornecedor: */
     private String endereco; /* Endereço do fornecedor: */
+    
+    public static ArrayList<Fornecedores> getFornecedor(){
+        return Fornecedor;
+    }
+    
+    public static Fornecedores fornecedorPk(int pk) {
+        try {
+            for (Fornecedores fornecedor : Fornecedor) {
+                if (fornecedor.pk == pk) {
+                    return fornecedor;
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return null;
+        }
+        return null;
+    }
+    
+    public int getPk() {
+        return pk;
+    }
+
+    public void setPk(int pk) {
+        this.pk = pk;
+    }
 
     public String getNome() {
         return nome;
