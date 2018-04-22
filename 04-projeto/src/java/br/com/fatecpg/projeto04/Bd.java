@@ -15,6 +15,9 @@ public class Bd {
     private static ArrayList<Clientes> Cliente = new ArrayList <>();
     
     public static ArrayList<Clientes> getCliente(){
+          if(Cliente==null){ 
+          Cliente = new ArrayList<>();
+      }
         return Cliente;
     }
 }

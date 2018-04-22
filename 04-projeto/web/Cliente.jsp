@@ -8,7 +8,14 @@
 <%@page import="br.com.fatecpg.projeto04.Clientes"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%
+<%try{//variaveis auxiliar
+    String n="";
+    String r="";
+    String cp="";
+    String t="";
+    String e="";
+    String en="";
+        // verifica ação dos botões
     if(request.getParameter("add")!= null){
     Clientes c = new Clientes();
     c.setNome(request.getParameter("nome"));
@@ -20,25 +27,22 @@
     Bd.getCliente().add(c);
     response.sendRedirect(request.getRequestURI());
     }
-    
-    if(request.getParameter("del")!= null){
+            // removendo dados 
+    else if(request.getParameter("del")!= null){
         int i = Integer.parseInt(request.getParameter("i"));
         Bd.getCliente().remove(i);
         response.sendRedirect(request.getRequestURI());
-    }
-    if(request.getParameter("alt")!= null){
+    }       // altera usando variaveis auxiliar
+    else if(request.getParameter("alt")!= null){
     int i = Integer.parseInt(request.getParameter("i"));
-        Bd.getCliente().remove(i);
-        
-       Clientes cl = new Clientes();
-    cl.setNome(request.getParameter("nome"));
-    cl.setRg(request.getParameter("rg"));
-    cl.setCpf(request.getParameter("cpf"));
-    cl.setTelefone(request.getParameter("telefone"));
-    cl.setEmail(request.getParameter("email"));
-    cl.setEndereco(request.getParameter("endereco"));
-    Bd.getCliente().add(cl);
-    response.sendRedirect(request.getRequestURI());
+      n = Bd.getCliente().get(i).getNome();
+                r = Bd.getCliente().get(i).getRg();
+                cp = Bd.getCliente().get(i).getCpf();
+                t = Bd.getCliente().get(i).getTelefone();
+                e = Bd.getCliente().get(i).getEmail();              
+                en = Bd.getCliente().get(i).getEndereco();
+                Bd.getCliente().remove(i);
+    
     }
 
 %>
@@ -52,9 +56,10 @@
    
     <!-- Fim do include do cabeçalho-->
     <body>
-         <%-- Carregando a navbar --%>
+         <!-- Carregando a navbar -->
         <%@include file="WEB-INF/jspf/navbar.jspf"%>
         
+        <!--cabeçalho da pagina -->
             <div class="container">
                 <div class="py-5 text-center">
                   <img class="d-block mx-auto mb-4" src="Imagens/user.png"  alt="" width="72" height="72">
@@ -62,7 +67,7 @@
                   <p class="lead">Insira os dados do cliente de acordo com a solicitação dos campos abaixo.</p>
                 </div>
             </div>
-        
+        <!-- iniciando o form -->
         <center>
             <form>
             <table>
@@ -95,7 +100,7 @@
                     <input type="submit" name="add" value="Adicionar" class="btn btn-info  btn-lg"/>
             </form>
         </center><hr/>
-        
+        <!-- tabela do form -->
         <table class="table table-hover">
             <thead class="thead-light"> <tr>
                 <th scope="row">Indice</th>
@@ -107,8 +112,9 @@
                 <th>Endereço</th>
                 <th>Exclusão/Alteração</th>
                 </tr></thead>
- 
+                    <!-- for para arrayList-->
             <% for(int i = 0; i<Bd.getCliente().size();i++){%>
+            <% Clientes c = Bd.getCliente().get(i);%>
             <tr>
                 <td><%= i%></td>
                 <td><%= Bd.getCliente().get(i).getNome()%></td>
@@ -128,7 +134,10 @@
             <%}%>
             
         </table>
-             <%-- Carregando foorte--%>
+            <%}catch(Exception ex){%>
+            
+             <%}%>
+             <!-- Carregando foorte-->
         <%@include file="WEB-INF/jspf/rodape.jspf"%>
     </body>
 </html>
