@@ -4,44 +4,42 @@
     Author     : user
 --%>
 
-<%@page import="br.com.fatecpg.projeto04.Bd"%>
+
 <%@page import="br.com.fatecpg.projeto04.Clientes"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%try{//variaveis auxiliar
-    String n="";
-    String r="";
-    String cp="";
-    String t="";
-    String e="";
-    String en="";
+<%//variaveis auxiliar
+   Clientes clienteEncontrado = null;
         // verifica ação dos botões
-    if(request.getParameter("add")!= null){
-    Clientes c = new Clientes();
-    c.setNome(request.getParameter("nome"));
-    c.setRg(request.getParameter("rg"));
-    c.setCpf(request.getParameter("cpf"));
-    c.setTelefone(request.getParameter("telefone"));
-    c.setEmail(request.getParameter("email"));
-    c.setEndereco(request.getParameter("endereco"));
-    Bd.getCliente().add(c);
-    response.sendRedirect(request.getRequestURI());
-    }
+         if(request.getParameter("add")!= null || request.getParameter("sav") != null){
+            String nome = request.getParameter("nome");
+            String rg = request.getParameter("rg");
+            String cpf = request.getParameter("cpf");
+            String telefone = request.getParameter("telefone");
+            String email = request.getParameter("email");
+            String endereco = request.getParameter("endereco");
+            Clientes c = new Clientes(nome, rg, cpf, telefone, email, endereco);
+            if(request.getParameter("add")!= null){ /* Se clicar em Adicionar: cria um novo registro no ArrayList do Fornecedor */
+               /*Fornecedores.getFornecedor().add(c);*/
+               Clientes.adicionar(c);
+               response.sendRedirect(request.getRequestURI()); 
+            } else { /* Se clicar em Salvar: Salva no mesmo registro do ArrayList do Fornecedor */
+               int pk = Integer.parseInt(request.getParameter("pk")); 
+               Clientes.alterar(c, pk);
+               response.sendRedirect(request.getRequestURI());
+            }
+ 
+        }
+    
             // removendo dados 
     else if(request.getParameter("del")!= null){
-        int i = Integer.parseInt(request.getParameter("i"));
-        Bd.getCliente().remove(i);
+        int pk = Integer.parseInt(request.getParameter("pk"));
+        Clientes.excluir(pk);
         response.sendRedirect(request.getRequestURI());
     }       // altera usando variaveis auxiliar
-    else if(request.getParameter("alt")!= null){
-    int i = Integer.parseInt(request.getParameter("i"));
-      n = Bd.getCliente().get(i).getNome();
-                r = Bd.getCliente().get(i).getRg();
-                cp = Bd.getCliente().get(i).getCpf();
-                t = Bd.getCliente().get(i).getTelefone();
-                e = Bd.getCliente().get(i).getEmail();              
-                en = Bd.getCliente().get(i).getEndereco();
-                Bd.getCliente().remove(i);
+    else if(request.getParameter("alt")!= null){    
+            int pk = Integer.parseInt(request.getParameter("pk"));
+            clienteEncontrado = Clientes.clientePk(pk);
     
     }
 
@@ -96,8 +94,13 @@
                     <td><input class="form-control" type="text" name="endereco" placeholder="Ex. Rua 123"/></td>
                 </tr>
             </table> 
+                <% if (clienteEncontrado == null) {%>
             <br/>
                     <input type="submit" name="add" value="Adicionar" class="btn btn-info  btn-lg"/>
+                    <%} else {%>
+            <br/> <input type="number" name="pk" value="<%=clienteEncontrado.getPk()%>" hidden>
+                    <input type="submit" name="sav" value="Salvar" class="btn btn-info  btn-lg"/>
+                    <%}%>
             </form>
         </center><hr/>
         <!-- tabela do form -->
@@ -113,30 +116,26 @@
                 <th>Exclusão/Alteração</th>
                 </tr></thead>
                     <!-- for para arrayList-->
-            <% for(int i = 0; i<Bd.getCliente().size();i++){%>
-            <% Clientes c = Bd.getCliente().get(i);%>
+             <% for (Clientes cliente : Clientes.getLista()) {%>
             <tr>
-                <td><%= i%></td>
-                <td><%= Bd.getCliente().get(i).getNome()%></td>
-                <td><%= Bd.getCliente().get(i).getRg()%></td>
-                <td><%= Bd.getCliente().get(i).getCpf()%></td>
-                <td><%= Bd.getCliente().get(i).getTelefone()%></td>
-                <td><%= Bd.getCliente().get(i).getEmail()%></td>
-                <td><%= Bd.getCliente().get(i).getEndereco()%></td>
+                <td>Nº <%= cliente.getPk()%></td>
+                <td><%= cliente.getNome()%></td>
+                <td><%= cliente.getRg()%></td>
+                <td><%= cliente.getCpf()%></td>
+                <td><%= cliente.getTelefone()%></td>
+                <td><%= cliente.getEmail()%></td>
+                <td><%= cliente.getEndereco()%></td>
                 <td>
                     <form>
-                        <input type="hidden" name="i" value="<%= i%>">
+                        <input type="hidden" name="i" value="Nº <%= cliente.getPk()%>">
                         <input type="submit" name="del" value="Excluir"  class="btn btn-danger">
                         <input type="submit" name="alt" value="Altera" class="btn btn-success">
                     </form>
                 </td>
             </tr>
-            <%}%>
-            
+            <%}%>            
         </table>
-            <%}catch(Exception ex){%>
             
-             <%}%>
              <!-- Carregando foorte-->
         <%@include file="WEB-INF/jspf/rodape.jspf"%>
     </body>

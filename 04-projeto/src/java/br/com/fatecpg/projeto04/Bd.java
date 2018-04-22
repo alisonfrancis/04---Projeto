@@ -12,12 +12,5 @@ import java.util.ArrayList;
  * cria um arraylist para cliente e outro para fornecedor.
  */
 public class Bd {
-    private static ArrayList<Clientes> Cliente = new ArrayList <>();
-    
-    public static ArrayList<Clientes> getCliente(){
-          if(Cliente==null){ 
-          Cliente = new ArrayList<>();
-      }
-        return Cliente;
-    }
+   
 }
