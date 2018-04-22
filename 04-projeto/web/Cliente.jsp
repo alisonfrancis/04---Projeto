@@ -11,7 +11,7 @@
 <%//variaveis auxiliar
    Clientes clienteEncontrado = null;
         // verifica ação dos botões
-         if(request.getParameter("add")!= null || request.getParameter("sav") != null){
+        if(request.getParameter("add")!= null || request.getParameter("sav") != null){
             String nome = request.getParameter("nome");
             String rg = request.getParameter("rg");
             String cpf = request.getParameter("cpf");
@@ -19,30 +19,24 @@
             String email = request.getParameter("email");
             String endereco = request.getParameter("endereco");
             Clientes c = new Clientes(nome, rg, cpf, telefone, email, endereco);
-            if(request.getParameter("add")!= null){ /* Se clicar em Adicionar: cria um novo registro no ArrayList do Fornecedor */
-               /*Fornecedores.getFornecedor().add(c);*/
+            if(request.getParameter("add")!= null){ // Se clicar em Adicionar: cria um novo registro no ArrayList do Cliente 
                Clientes.adicionar(c);
                response.sendRedirect(request.getRequestURI()); 
-            } else { /* Se clicar em Salvar: Salva no mesmo registro do ArrayList do Fornecedor */
+            } else { // Se clicar em Salvar: Salva no mesmo registro do ArrayList do Cliente
                int pk = Integer.parseInt(request.getParameter("pk")); 
                Clientes.alterar(c, pk);
                response.sendRedirect(request.getRequestURI());
             }
  
-        }
-    
-            // removendo dados 
-    else if(request.getParameter("del")!= null){
-        int pk = Integer.parseInt(request.getParameter("pk"));
-        Clientes.excluir(pk);
-        response.sendRedirect(request.getRequestURI());
-    }       // altera usando variaveis auxiliar
-    else if(request.getParameter("alt")!= null){    
+        }else if(request.getParameter("del")!= null){ // Se clicar em excluir: remove todos os dados do Cliente com a mesma pk
+            int pk = Integer.parseInt(request.getParameter("pk"));
+            Clientes.excluir(pk);
+            response.sendRedirect(request.getRequestURI());
+            
+        }else if(request.getParameter("alt")!= null){ // Se clicar em Alterar: busca todos os dados do Cliente com a mesma pk e coloca no forms    
             int pk = Integer.parseInt(request.getParameter("pk"));
             clienteEncontrado = Clientes.clientePk(pk);
-    
-    }
-
+        }
 %>
 <html>
    <!-- include do cabeçalho -->
@@ -71,36 +65,36 @@
             <table>
                 <tr>
                     <td> Nome:</td>
-                    <td><input class="form-control" type="text" name="nome" placeholder="Ex. João"/></td>
+                    <td><input class="form-control" type="text" id="nome" name="nome" placeholder="Ex. João" <% if (clienteEncontrado != null) {%> value="<%=clienteEncontrado.getNome()%>" <%}%>></td>
                 </tr>
                 <tr>
                     <td>RG:</td>
-                    <td><input class="form-control" type="text" name="rg" placeholder="12.345.678-9"/></td>
+                    <td><input class="form-control" type="text" id="rg" name="rg" placeholder="12.345.678-9"<% if (clienteEncontrado != null) {%> value="<%=clienteEncontrado.getRg()%>" <%}%>></td>
                 </tr>
                 <tr>
                     <td>CPF:</td>
-                    <td><input class="form-control" type="text" name="cpf" placeholder="123.456.789-00"/></td>
+                    <td><input class="form-control" type="text" id="cpf" name="cpf" placeholder="123.456.789-00"<% if (clienteEncontrado != null) {%> value="<%=clienteEncontrado.getCpf()%>" <%}%>></td>
                 </tr>
                 <tr>
                     <td>Telefone:</td>
-                    <td><input class="form-control" type="text" name="telefone" placeholder="01399999-9999"/></td>
+                    <td><input class="form-control" type="text" id="telefone" name="telefone" placeholder="01399999-9999"<% if (clienteEncontrado != null) {%> value="<%=clienteEncontrado.getTelefone()%>" <%}%>></td>
                 </tr>
                 <tr>
                     <td>E-Mail:</td>
-                    <td><input class="form-control" type="text" name="email" placeholder="email@example.com"/></td>
+                    <td><input class="form-control" type="text" id="email" name="email" placeholder="email@example.com"<% if (clienteEncontrado != null) {%> value="<%=clienteEncontrado.getEmail()%>" <%}%>></td>
                 </tr>
                 <tr>
                     <td>Endereço:</td>
-                    <td><input class="form-control" type="text" name="endereco" placeholder="Ex. Rua 123"/></td>
+                    <td><input class="form-control" type="text" id="endereco" name="endereco" placeholder="Ex. Rua 123"<% if (clienteEncontrado != null) {%> value="<%=clienteEncontrado.getEndereco()%>" <%}%>></td>
                 </tr>
             </table> 
                 <% if (clienteEncontrado == null) {%>
             <br/>
-                    <input type="submit" name="add" value="Adicionar" class="btn btn-info  btn-lg"/>
-                    <%} else {%>
-            <br/> <input type="number" name="pk" value="<%=clienteEncontrado.getPk()%>" hidden>
+                <input type="submit" name="add" value="Adicionar" class="btn btn-info  btn-lg"/>
+                <%} else {%>
+                    <input type="number" name="pk" value="<%=clienteEncontrado.getPk()%>" hidden>
                     <input type="submit" name="sav" value="Salvar" class="btn btn-info  btn-lg"/>
-                    <%}%>
+                <%}%>
             </form>
         </center><hr/>
         <!-- tabela do form -->
@@ -127,7 +121,7 @@
                 <td><%= cliente.getEndereco()%></td>
                 <td>
                     <form>
-                        <input type="hidden" name="i" value="Nº <%= cliente.getPk()%>">
+                        <input type="hidden" name="pk" value="<%= cliente.getPk()%>">
                         <input type="submit" name="del" value="Excluir"  class="btn btn-danger">
                         <input type="submit" name="alt" value="Altera" class="btn btn-success">
                     </form>

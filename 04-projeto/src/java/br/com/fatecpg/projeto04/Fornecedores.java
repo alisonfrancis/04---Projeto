@@ -3,7 +3,7 @@ package br.com.fatecpg.projeto04;
 import java.util.ArrayList;
 
 public class Fornecedores {
-    private static ArrayList<Fornecedores> Fornecedor = new ArrayList <>();
+    private static ArrayList<Fornecedores> Fornecedor = new ArrayList <>(); //Abaixo: Os atributos do Fornecedor
     private int pk; /* Valor/Chave único(a) de indetificação do fornecedor*/
     private String nome; /* Nome do fornecedore */
     private String razsoc; /* Razão social */
@@ -15,13 +15,13 @@ public class Fornecedores {
     public static ArrayList<Fornecedores> getFornecedor(){
         return Fornecedor;
     }
-    
+    // Ações de adicionar, edita(salvar edições) e excluir Fornecedores
     public static int adicionar(Fornecedores fornecedor) {
         try {
             Fornecedor.add(fornecedor);
             return fornecedor.pk;
         } catch (Exception ex) {
-            System.out.println("Errou!");
+            System.out.println(ex.getMessage());
             return 0;
         }
     }
@@ -34,7 +34,7 @@ public class Fornecedores {
                 }
             }
         } catch (Exception ex) {
-            System.out.println("Errou!");
+            System.out.println(ex.getMessage());
             return null;
         }
         return null;
@@ -74,7 +74,7 @@ public class Fornecedores {
     
         public Fornecedores(String nome, String razsoc, String cnpj, String email, String telefone, String endereco) {
         try {
-            this.pk = (int)(Math.random() * 10000);
+            this.pk = (int)(Math.random() * 1000); //Cria um valor random pra Primary Key do Fornecedor
             this.nome = nome;
             this.razsoc = razsoc;
             this.cnpj = cnpj;

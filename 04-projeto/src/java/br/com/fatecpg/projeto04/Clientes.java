@@ -28,7 +28,7 @@ public class Clientes {
             Cliente1.add(cliente);
             return cliente.pk;
         } catch (Exception ex) {
-            System.out.println("Errou!");
+            System.out.println(ex.getMessage());
             return 0;
         }
     }
@@ -41,7 +41,7 @@ public class Clientes {
                 }
             }
         } catch (Exception ex) {
-            System.out.println("Errou!");
+            System.out.println(ex.getMessage());
             return null;
         }
         return null;
@@ -78,11 +78,10 @@ public class Clientes {
         }
         return false;
     }
-   
-    
+
         public Clientes(String nome, String rg, String cpf, String email, String telefone, String endereco) {
         try {
-            this.pk = (int)(Math.random() * 10000);
+            this.pk = (int)(Math.random() * 1000);
             this.nome = nome;
             this.rg = rg;
             this.cpf = cpf;
@@ -153,10 +152,6 @@ public class Clientes {
         this.endereco = endereco;
     }
 
-    
-
-   
-  
    public static ArrayList<Clientes> getLista() {
         return Cliente1;
     }
@@ -164,8 +159,4 @@ public class Clientes {
     public static void setLista(ArrayList<Clientes> Cliente) {
         Clientes.Cliente1 = Cliente;
     }
-   
-
-    
-    
 }
