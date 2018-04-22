@@ -16,10 +16,20 @@ public class Fornecedores {
         return Fornecedor;
     }
     
-    public static Fornecedores fornecedorPk(int i) {
+    public static int adicionar(Fornecedores fornecedor) {
+        try {
+            Fornecedor.add(fornecedor);
+            return fornecedor.pk;
+        } catch (Exception ex) {
+            System.out.println("Errou!");
+            return 0;
+        }
+    }
+    
+    public static Fornecedores fornecedorPk(int pk) {
         try {
             for (Fornecedores fornecedor : Fornecedor) {
-                if (fornecedor.pk == i) {
+                if (fornecedor.pk == pk) {
                     return fornecedor;
                 }
             }
@@ -28,6 +38,52 @@ public class Fornecedores {
             return null;
         }
         return null;
+    }
+    
+    public static boolean alterar(Fornecedores dados, int id) {
+        try {
+            for (Fornecedores fornecedor : Fornecedor) {
+                if (fornecedor.pk == id) {
+                    int index = Fornecedor.indexOf(fornecedor);
+                    dados.setPk(id);
+                    Fornecedor.set(index, dados);
+                    return true;
+                }
+            }
+            return true;
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean excluir(int id) {
+        try {
+            for (Fornecedores fornecedor : Fornecedor) {
+                if (fornecedor.pk == id) {
+                    Fornecedor.remove(fornecedor);
+                    return true;
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+        return false;
+    }
+    
+        public Fornecedores(String nome, String razsoc, String cnpj, String email, String telefone, String endereco) {
+        try {
+            this.pk = (int)(Math.random() * 10000);
+            this.nome = nome;
+            this.razsoc = razsoc;
+            this.cnpj = cnpj;
+            this.email = email;
+            this.telefone = telefone;
+            this.endereco = endereco;
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
     
     public int getPk() {
@@ -84,5 +140,13 @@ public class Fornecedores {
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+    
+    public static ArrayList<Fornecedores> getLista() {
+        return Fornecedor;
+    }
+
+    public static void setLista(ArrayList<Fornecedores> Fornecedor) {
+        Fornecedores.Fornecedor = Fornecedor;
     }
 }

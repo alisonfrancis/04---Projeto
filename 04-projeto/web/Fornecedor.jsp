@@ -9,28 +9,31 @@
     <%
         Fornecedores fornecedorEncontrado = null;
         if(request.getParameter("add")!= null || request.getParameter("sav") != null){
-            Fornecedores c = new Fornecedores();
-            c.setNome(request.getParameter("nome"));
-            c.setRazsoc(request.getParameter("razao_social"));
-            c.setCnpj(request.getParameter("cnpj"));
-            c.setTelefone(request.getParameter("telefone"));
-            c.setEmail(request.getParameter("email"));
-            c.setEndereco(request.getParameter("endereco"));
+            String nome = request.getParameter("nome");
+            String razsoc = request.getParameter("razao_social");
+            String cnpj = request.getParameter("cnpj");
+            String telefone = request.getParameter("telefone");
+            String email = request.getParameter("email");
+            String endereco = request.getParameter("endereco");
+            Fornecedores c = new Fornecedores(nome, razsoc, cnpj, telefone, email, endereco);
             if(request.getParameter("add")!= null){ /* Se clicar em Adicionar: cria um novo registro no ArrayList do Fornecedor */
-               Fornecedores.getFornecedor().add(c);
+               /*Fornecedores.getFornecedor().add(c);*/
+               Fornecedores.adicionar(c);
                response.sendRedirect(request.getRequestURI()); 
             } else { /* Se clicar em Salvar: Salva no mesmo registro do ArrayList do Fornecedor */
-                
+               int pk = Integer.parseInt(request.getParameter("pk")); 
+               Fornecedores.alterar(c, pk);
+               response.sendRedirect(request.getRequestURI());
             }
  
         } else if(request.getParameter("del")!= null){
-            int i = Integer.parseInt(request.getParameter("i"));
-            Fornecedores.getFornecedor().remove(i);
+            int pk = Integer.parseInt(request.getParameter("pk"));
+            Fornecedores.excluir(pk);
             response.sendRedirect(request.getRequestURI());
                 
         }else if(request.getParameter("alt")!= null){
-            int i = Integer.parseInt(request.getParameter("i"));
-            fornecedorEncontrado = Fornecedores.fornecedorPk(i);
+            int pk = Integer.parseInt(request.getParameter("pk"));
+            fornecedorEncontrado = Fornecedores.fornecedorPk(pk);
         }
     %>
 <html>
@@ -53,7 +56,6 @@
       </div>
         </div>
         <fieldset><center>
-            <legend>Adicionar Fornecedores</legend>
             <form>
                 Nome: <br/><input type="text" id="nome" name="nome" placeholder="Ex. Maria" <% if (fornecedorEncontrado != null) {%> value="<%=fornecedorEncontrado.getNome()%>" <%}%>><br/>
                 Razão Social:<br/><input type="text" id="razao_social" name="razao_social" placeholder="Ex. Trick or Treat & Cia Ltda" <% if (fornecedorEncontrado != null) {%> value="<%=fornecedorEncontrado.getRazsoc()%>" <%}%>><br/>
@@ -82,20 +84,20 @@
             <th>Exclusão/Alteração</th>
         </tr></thead>
  
-        <% for(int i = 0; i<Fornecedores.getFornecedor().size();i++){%>
+        <% for (Fornecedores fornecedor : Fornecedores.getLista()) {%>
         <tr>
-            <td><%= i%></td>
-            <td><%= Fornecedores.getFornecedor().get(i).getNome()%></td>
-            <td><%= Fornecedores.getFornecedor().get(i).getRazsoc()%></td>
-            <td><%= Fornecedores.getFornecedor().get(i).getCnpj()%></td>
-            <td><%= Fornecedores.getFornecedor().get(i).getTelefone()%></td>
-            <td><%= Fornecedores.getFornecedor().get(i).getEmail()%></td>
-            <td><%= Fornecedores.getFornecedor().get(i).getEndereco()%></td>
+            <td>Nº <%= fornecedor.getPk()%></td>
+            <td><%= fornecedor.getNome()%></td>
+            <td><%= fornecedor.getRazsoc()%></td>
+            <td><%= fornecedor.getCnpj()%></td>
+            <td><%= fornecedor.getTelefone()%></td>
+            <td><%= fornecedor.getEmail()%></td>
+            <td><%= fornecedor.getEndereco()%></td>
             <td>
                 <form>
-                    <input type="hidden" name="i" value="<%= i%>">
+                    <input type="hidden" name="pk" value="<%= fornecedor.getPk()%>">
                     <input type="submit" name="del" value="Excluir"  class="btn btn-danger">
-                    <input type="submit" name="alt" value="Altera" class="btn btn-success">
+                    <input type="submit" name="alt" value="Alterar" class="btn btn-success">
                 </form>
             </td>
         </tr>
