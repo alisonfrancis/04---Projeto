@@ -1,10 +1,9 @@
-<%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
 
 <hr><br>
        <footer class="container footer-css">
-            <p class="float-right"><a href="#" >Back to top</a></p>
-                <p>&copy; 2018 Fatec, Pg. &middot; <a href="https://github.com/alisonfrancis/04-Projeto" >Site do Projeto</a></p>
+            <p class="float-right"><a href="#"><button type='submit'>Back to top</button></a></p>
+            <p>&copy; 2018 Fatec, Pg. &middot; <a href="https://github.com/alisonfrancis/04-Projeto" >Site do Projeto</a></p>
         </footer>
 <!-- 
                     JS acima da tag</body> 
